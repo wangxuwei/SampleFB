@@ -1,0 +1,56 @@
+.MainView{
+	margin-top: 60px;
+}
+
+
+.MainView .MainView-siteBar, .MainView .MainView-content{
+    min-height: 450px;
+    height :100%;
+}
+
+
+.MainView-content{
+  position: absolute;
+  top: 60px; right: 0px; bottom: 0; left: 250px;
+//  background: url(images/content-bg.png);
+}
+
+.MainView-panels{
+  position: absolute;
+  top: 10px; right: 70px; bottom: 30px; left: 70px;
+  overflow: hidden;
+}
+
+.MainView-panels-inner{
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-transition: -webkit-transform .5s;
+}
+
+.MainView-folderViewPanel{
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0px;
+  width: 100%;
+}
+
+/* --- delete controls --- */
+.delete-controls{
+  position: absolute;
+  right: 0px;
+  width: 200px;
+}
+.delete-controls-inner{
+  position: absolute;
+  width: 200px;
+  height: 36px;
+  left: 200px;
+  -webkit-transition: all .3s ease;
+}
+
+.delete-controls-inner.show{
+  -webkit-transform: translate(-140px,0px);
+}
+/* --- /delete controls --- */

@@ -55,11 +55,19 @@ public class SampleFBAuthRequest implements AuthRequest {
             // Build the expectedUserToken from the user info
             // For this example, simplistic userToken (sha1(username,password))
             String expectedUserToken = Hashing.sha1().hashString(user.getUsername() + user.getId()).toString();
-
             if (Objects.equal(expectedUserToken, userToken)) {
+                Socialdentity so = socialdentityDao.getSocialdentityByUserId(user.getId());
+                rc.setAttribute("fbid", so.getFbid());
+                rc.setAttribute("fbtoken", so.getFbToken());
+//                System.out.println(so.getFbid());
+//                System.out.println(so.getFbToken());
+                
                 // if valid, then, we create the AuthTocken with our User object
                 AuthToken<User> authToken = new AuthToken<User>();
+                user.setSocialdentity(so);
                 authToken.setUser(user);
+                //
+                
                 return authToken;
 
             } else {
@@ -133,9 +141,25 @@ public class SampleFBAuthRequest implements AuthRequest {
             //System.out.println(s.getFbSignedRequest());
             System.out.println(s.getFbToken());
             //
+            rc.setAttribute("fbid", s.getFbid());
+            rc.setAttribute("fbtoken", s.getFbToken());
             setUserToSession(rc, user);
             return user;
         } else {
+            //
+            Socialdentity s = new Socialdentity();
+            s.setUser_id(user.getId());
+            s.setFbid(userID);
+            s.setFbToken(accessToken);
+            s.setFbSignedRequest(signedRequest);
+            socialdentityDao.save(s);
+            System.out.println(s.getFbid());
+            //System.out.println(s.getFbSignedRequest());
+            System.out.println(s.getFbToken());
+            //
+            rc.setAttribute("fbid", s.getFbid());
+            rc.setAttribute("fbtoken", s.getFbToken());
+            setUserToSession(rc, user);
             setUserToSession(rc, user);
             return user;
         }

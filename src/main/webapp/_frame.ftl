@@ -15,7 +15,6 @@
     <script type="text/javascript">
       // set the contextPath as a javascript global variable
       var contextPath = "${_r.contextPath}";
-      
       // set the default to load the template
       brite.defaultComponentConfig.loadTmpl = true;
     </script>
@@ -28,9 +27,19 @@
   	</div>
 	</div>
   
-  <script type="text/javascript">
+   <script type="text/javascript">
+   [#if user??]
+   		var fbtoken = '${_r.user.socialdentity.fbToken}';
+		var fbid= '${_r.user.socialdentity.fbid}';
+	[/#if]
+   
 	$(function(){
-		brite.display("Login",null,{parent:"#bodyPage"});
+		[#if user??]
+		
+				brite.display("MainScreen","#bodyPage");
+	    [#else]
+				brite.display("Login",null,{parent:"#bodyPage"});
+	    [/#if]
 	});
 	</script>
   </body>

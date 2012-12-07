@@ -1,0 +1,32 @@
+<script id="tmpl-Friends" type="text/html">
+<div class="Friends">
+  <div class="FriendsList">
+		<div class="page-header">
+	    <h2>Friends
+	    </h2>
+	  </div>
+	  <table class="table table-striped table-head-fix">
+	        <thead>
+	         <th style="width:25%">Name</th>
+	         <th style="width:25%">Id</th>
+	         <th style="width:25%">Email</th>
+	         <th style="width:10%">*</th>
+	        </thead>
+	      </table>
+	  <div class="Friends-tableListContain">
+	  <table class="table table-striped">
+	        <tbody class="listItem">
+	        </tbody>
+	      </table>
+	    </div>
+	</div>
+</div>
+</script>
+<script id="tmpl-Friends-list-rowItem" type="text/html">
+		 	<tr>
+	            <td style="width:25%">{{:name}}</td>
+	            <td style="width:25%">{{:id}}</td>
+	            <td style="width:25%">{{:email}}</td>
+	            <td style="width:10%">Add</td>
+	          </tr>
+</script>

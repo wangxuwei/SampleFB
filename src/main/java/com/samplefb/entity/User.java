@@ -3,6 +3,7 @@ package com.samplefb.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "principal")
@@ -14,6 +15,9 @@ public class User extends BaseEntity {
     private String fullName;
     private String password;
 
+    @Transient
+    private Socialdentity socialdentity;
+    
     public String getUsername() {
         return username;
     }
@@ -36,5 +40,13 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Socialdentity getSocialdentity() {
+        return socialdentity;
+    }
+
+    public void setSocialdentity(Socialdentity socialdentity) {
+        this.socialdentity = socialdentity;
     }
 }

@@ -1,0 +1,23 @@
+<script id="tmpl-ProjectList" type="text/html">
+<div class="well sidebar-nav">
+            <ul class="nav nav-list addProjectContain">
+              <li class="nav-header">Project list  
+              	<button class="btn btn-mini btn-primary newBtn pull-right btn-success" type="button">+</button>
+              </li>
+            </ul>
+            <ul class="nav nav-list projectListContain">
+             </ul>
+          </div><!--/.well -->
+</script>
+
+<script id="tmpl-ProjectList-item" type="text/html">
+	<li  style="position:relative">
+		<a class="item" href="#"  data-entity="Project" data-entity-id="{{:id}}" >{{:subjectView}}</a>
+		<i class="icon-edit editBtn"  style="position: absolute;right:0;top:2px"  data-entity="Project" data-entity-id="{{:id}}" data-value='{{:subject}}'></i>
+	</li>
+</script>
+<script id="tmpl-ProjectList-add-item" type="text/html">
+	<li class="item addItem" style="margin-top: 5px">
+		<input type="text" name="addItem" placeholder="[Enter]-[ESC]" style="height: 16px;width:150px"/>
+	</li>
+</script>

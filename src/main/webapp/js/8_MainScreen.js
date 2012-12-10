@@ -20,7 +20,7 @@
 			var view = this;
 			var $e = view.$el;
 
-			brite.display("Friends");
+			brite.display("GroupList");
 		}
 
 	});

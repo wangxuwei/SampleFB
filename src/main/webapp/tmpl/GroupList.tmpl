@@ -1,22 +1,22 @@
-<script id="tmpl-ProjectList" type="text/html">
+<script id="tmpl-GroupList" type="text/html">
 <div class="well sidebar-nav">
-            <ul class="nav nav-list addProjectContain">
-              <li class="nav-header">Project list  
-              	<button class="btn btn-mini btn-primary newBtn pull-right btn-success" type="button">+</button>
+            <ul class="nav nav-list addGroupContain">
+              <li class="nav-header">Group list  
+              	<button class="btn btn-mini btn-primary newGroupBtn pull-right btn-success" type="button">+</button>
               </li>
             </ul>
-            <ul class="nav nav-list projectListContain">
+            <ul class="nav nav-list groupListContain">
              </ul>
           </div><!--/.well -->
 </script>
 
-<script id="tmpl-ProjectList-item" type="text/html">
+<script id="tmpl-GroupList-item" type="text/html">
 	<li  style="position:relative">
-		<a class="item" href="#"  data-entity="Project" data-entity-id="{{:id}}" >{{:subjectView}}</a>
-		<i class="icon-edit editBtn"  style="position: absolute;right:0;top:2px"  data-entity="Project" data-entity-id="{{:id}}" data-value='{{:subject}}'></i>
+		<a class="item" href="#"  data-entity="Group" data-entity-id="{{:id}}" >{{:name}}</a>
+		<i class="icon-edit editBtn"  style="position: absolute;right:0;top:2px"  data-entity="Group" data-entity-id="{{:id}}" data-value='{{:name}}'></i>
 	</li>
 </script>
-<script id="tmpl-ProjectList-add-item" type="text/html">
+<script id="tmpl-GroupList-add-item" type="text/html">
 	<li class="item addItem" style="margin-top: 5px">
 		<input type="text" name="addItem" placeholder="[Enter]-[ESC]" style="height: 16px;width:150px"/>
 	</li>

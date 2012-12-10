@@ -152,7 +152,11 @@
        <version>4.1.7.Final</version>
     </dependency>
 
-     
+     <dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-701.jdbc4</version>
+		</dependency>
      
         <!-- /Hibernate -->
 

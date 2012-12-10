@@ -1,23 +1,34 @@
 package com.samplefb.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
-@Table(name = "principal")
+@Table(name = "user")
 public class User extends BaseEntity {
 
     @Column(name = "user_name")
-    private String username;
+    private String        username;
     @Column(name = "full_name")
-    private String fullName;
-    private String password;
+    private String        fullName;
+    private String        password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Group>    groupSet;
 
     @Transient
     private Socialdentity socialdentity;
-    
+
     public String getUsername() {
         return username;
     }
@@ -48,5 +59,13 @@ public class User extends BaseEntity {
 
     public void setSocialdentity(Socialdentity socialdentity) {
         this.socialdentity = socialdentity;
+    }
+
+    public Set<Group> getGroupSet() {
+        return groupSet;
+    }
+
+    public void setGroupSet(Set<Group> groupSet) {
+        this.groupSet = groupSet;
     }
 }

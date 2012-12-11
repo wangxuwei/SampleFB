@@ -5,5 +5,6 @@ var app = app || {};
 (function($){
 		//register RemoteDao
 		brite.registerDao(new app.RemoteGroupDao());
+		brite.registerDao(new app.RemoteContactDao());
 })();
 

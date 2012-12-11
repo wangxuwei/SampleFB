@@ -28,13 +28,18 @@
 	</div>
   
    <script type="text/javascript">
-   [#if user??]
-   		var fbtoken = '${_r.user.socialdentity.fbToken}';
-		var fbid= '${_r.user.socialdentity.fbid}';
-	[/#if]
+   var fbtoken = null;
+   var fbid = null;
    
 	$(function(){
 		[#if user??]
+		
+		[#if user.socialdentity??]
+	 fbtoken = '${_r.user.socialdentity.fbToken}';
+		 fbid= '${_r.user.socialdentity.fbid}';
+		[/#if]
+   
+		
 		
 				brite.display("MainScreen","#bodyPage");
 	    [#else]

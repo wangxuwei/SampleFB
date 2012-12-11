@@ -57,11 +57,11 @@ public class SampleFBAuthRequest implements AuthRequest {
             String expectedUserToken = Hashing.sha1().hashString(user.getUsername() + user.getId()).toString();
             if (Objects.equal(expectedUserToken, userToken)) {
                 Socialdentity so = socialdentityDao.getSocialdentityByUserId(user.getId());
+                System.out.println("ok2");
                 if (so!=null) {
                     rc.setAttribute("fbid", so.getFbid());
                     rc.setAttribute("fbtoken", so.getFbToken());    
                 }
-                
 //                System.out.println(so.getFbid());
 //                System.out.println(so.getFbToken());
                 
@@ -138,7 +138,7 @@ public class SampleFBAuthRequest implements AuthRequest {
             s.setUser_id(user.getId());
             s.setFbid(userID);
             s.setFbToken(accessToken);
-            s.setFbSignedRequest(signedRequest);
+           // s.setFbSignedRequest(signedRequest);
             socialdentityDao.save(s);
             System.out.println(s.getFbid());
             //System.out.println(s.getFbSignedRequest());

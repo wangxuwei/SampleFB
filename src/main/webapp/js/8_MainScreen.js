@@ -26,8 +26,4 @@
 	});
 	// --------- View Registration --------- //
 
-	// load screen
-	$(function() {
-		brite.display("MainScreen");
-	});
 })();

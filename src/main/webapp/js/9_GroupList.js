@@ -42,9 +42,9 @@
 
 		docEvents : {
 			"DO_SELECT_GROUP" : function(event, extra) {
+				
 				var view = this;
 				var id = extra.id; 
-				
 				view.$el.find("li.sel").removeClass("sel");
 				view.$el.find("i.icon-folder-open").removeClass("icon-folder-open").addClass("icon-folder-close");
 
@@ -55,6 +55,10 @@
 
 				// keep that for dataChangeEvent (to keep the item selected)
 				view.selectedFolderId = id;
+				
+				brite.display("MainContent", null, {
+							id : id
+				});
 			}
 
 		},

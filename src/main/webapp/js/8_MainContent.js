@@ -24,6 +24,7 @@
 				$e.find("input[name='title']").val('');
 				$e.find("input[name='taskId']").val('');
 				$('#myModal').show();
+				view.refreshFriendsList.call(view);
 			},
 
 			"btap;.showDeleteBtn" : function(e) {
@@ -107,8 +108,33 @@
 					$('#myModal').hide();
 				}
 			});
-		}
+		},
+		refreshFriendsList : function() {
+			var view = this;
+			var $e = view.$el;
+			var dfd = $.Deferred();
+			var $items = $e.find(".listItem").empty();
+			$.ajax({
+				type : "get",
+				url : contextPath + "/friends.json",
+				data : {
+					token : fbtoken,
+					limit : 10,
+					offset : 0
+				},
+				dataType : "json"
+			}).done(function(data) {
+				var html = $("#tmpl-Friends-list-rowItem").render(data);
+				$items.html(html);
+				$items.find(".addFriendBtn").click(function(){
+					
+				})
+				dfd.resolve();
+			});
 
+		
+			return dfd.promise();
+		}
 	});
 	// --------- View Private Methods --------- //
 	function refresh() {

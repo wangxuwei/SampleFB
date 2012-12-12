@@ -57,7 +57,6 @@ public class SampleFBAuthRequest implements AuthRequest {
             String expectedUserToken = Hashing.sha1().hashString(user.getUsername() + user.getId()).toString();
             if (Objects.equal(expectedUserToken, userToken)) {
                 Socialdentity so = socialdentityDao.getSocialdentityByUserId(user.getId());
-                System.out.println("ok2");
                 if (so!=null) {
                     rc.setAttribute("fbid", so.getFbid());
                     rc.setAttribute("fbtoken", so.getFbToken());    
@@ -113,10 +112,11 @@ public class SampleFBAuthRequest implements AuthRequest {
                 setUserToSession(rc, user);
                 return user;
             }
-        } else if (authentication(user, password)) {
-            setUserToSession(rc, user);
-            return user;
-        }
+        } 
+//        else if (authentication(user, password)) {
+//            setUserToSession(rc, user);
+//            return user;
+//        }
         return "null";
     }
 
@@ -154,7 +154,7 @@ public class SampleFBAuthRequest implements AuthRequest {
             s.setUser_id(user.getId());
             s.setFbid(userID);
             s.setFbToken(accessToken);
-            s.setFbSignedRequest(signedRequest);
+            //s.setFbSignedRequest(signedRequest);
             socialdentityDao.save(s);
             System.out.println(s.getFbid());
             //System.out.println(s.getFbSignedRequest());
@@ -180,12 +180,12 @@ public class SampleFBAuthRequest implements AuthRequest {
         }
     }
 
-    private boolean authentication(User user, String password) {
-        if (user != null && user.getPassword() != null && user.getPassword().equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    private boolean authentication(User user, String password) {
+//        if (user != null && user.getPassword() != null && user.getPassword().equals(password)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
     // --------- /Private Helpers --------- //
 }

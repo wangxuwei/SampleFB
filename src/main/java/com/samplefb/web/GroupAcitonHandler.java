@@ -35,7 +35,7 @@ public class GroupAcitonHandler {
     }
 
     @WebActionHandler(name = "createGroup")
-    public Map createProject(@WebParam("id") Long id, @WebParam("name") String name, RequestContext rc) {
+    public Map createGroup(@WebParam("id") Long id, @WebParam("name") String name, RequestContext rc) {
         Map resultMap = new HashMap();
         try {
             Group po = new Group();

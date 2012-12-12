@@ -48,7 +48,7 @@
 				});
 
 				$e.on("click", ".deleteBtn", function() {
-					brite.dao("Project").remove(view.projectId).done(function() {
+					brite.dao("Group").remove(view.groupId).done(function() {
 						refreshList();
 					});
 				});
@@ -57,21 +57,6 @@
 			"btap;.closeBtn" : function(e) {
 				$('#myModal').hide();
 			},
-			"btap;.saveTaskBtn" : function(e) {
-				var view = this;
-				var $e = view.$el;
-				var projectId = view.projectId;
-				var id = $('#myModal').find("input[name='taskId']").val();
-				var title = $('#myModal').find("input[name='title']").val();
-				if (title == "") {
-					return;
-				};
-				brite.dao("Task").updateTask("Task", id, projectId, title).done(function() {
-					$('#myModal').hide();
-					refresh.call(view);
-				});
-			},
-
 			"btap;.opBtn" : function(e) {
 				var view = this;
 				var $e = view.$el;
@@ -126,13 +111,22 @@
 			}).done(function(data) {
 				var html = $("#tmpl-Friends-list-rowItem").render(data);
 				$items.html(html);
-				$items.find(".addFriendBtn").click(function(){
-					
+				$items.find(".addContactBtn").click(function(){
+					var $td = $(this).closest("td");
+					var $inputs = $($td).find("input");
+					var d = {};
+					$inputs.each(function(){
+						var $inp = $(this);
+						d[$inp.attr("name")] = $inp.val(); 
+					})
+					d.groupId =view.groupId; 
+					brite.dao("Contact").addContact(d).done(function(po) {
+						refresh.call(view);
+						$('#myModal').hide();
+					})
 				})
 				dfd.resolve();
 			});
-
-		
 			return dfd.promise();
 		}
 	});
@@ -142,13 +136,13 @@
 		var $e = view.$el;
 		setTimeout(function() {
 			brite.display("MainContent", null, {
-					id : view.projectId
+					id : view.groupId
 				});
 		}, 100)
 	}
 
 	function refreshList() {
-		var p = $(document).bFindComponents("ProjectList");
+		var p = $(document).bFindComponents("GroupList");
 		if (p && p.length > 0) {
 			p[0].refresh();
 		}

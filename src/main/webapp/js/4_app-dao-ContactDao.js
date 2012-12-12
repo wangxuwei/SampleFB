@@ -22,14 +22,15 @@ var app = app || {};
 
 
 	RemoteContactDao.prototype.addContact = function(data){
-		return $.ajax({
+	var dfd = $.ajax({
 			type : "POST",
-			url : contextPath + "/getContactListByGroup.json",
+			url : contextPath + "/addContact.do",
 			data : data,
 			dataType : "json"
 		}).pipe(function(val) {
-			return val.result;
+ 			return val;
 		});
+		return dfd.promise();
 	}
 
 	app.RemoteContactDao = RemoteContactDao;

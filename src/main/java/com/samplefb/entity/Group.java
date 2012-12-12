@@ -1,7 +1,8 @@
 package com.samplefb.entity;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -15,16 +16,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "group")
 public class Group extends BaseEntity {
-    private String        name;
+    private String       name;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "GroupContact", joinColumns = { @JoinColumn(name = "group_id") }, inverseJoinColumns = { @JoinColumn(name = "contact_id") })
-    private List<Contact> contactList = new ArrayList<Contact>();
+    private Set<Contact> contactList = new HashSet<Contact>();
 
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User          user;
-    private Long          user_id;
+    private User         user;
+    private Long         user_id;
 
     public String getName() {
         return name;
@@ -34,11 +35,11 @@ public class Group extends BaseEntity {
         this.name = name;
     }
 
-    public List<Contact> getContactList() {
+    public Set<Contact> getContactList() {
         return contactList;
     }
 
-    public void setContactList(List<Contact> contactList) {
+    public void setContactList(Set<Contact> contactList) {
         this.contactList = contactList;
     }
 

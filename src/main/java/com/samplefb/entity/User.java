@@ -22,6 +22,9 @@ public class User extends BaseEntity {
     private String        fullName;
     private String        password;
 
+    private String        firstName;
+    private String        lastName;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Group>    groupSet;
@@ -67,5 +70,21 @@ public class User extends BaseEntity {
 
     public void setGroupSet(Set<Group> groupSet) {
         this.groupSet = groupSet;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

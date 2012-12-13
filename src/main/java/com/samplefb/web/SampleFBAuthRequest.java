@@ -168,6 +168,55 @@ public class SampleFBAuthRequest implements AuthRequest {
         }
     }
 
+    @WebActionHandler
+    public Object googleLogin(@WebParam("access_token") String accessToken, @WebParam("expiresIn") String expiresIn,
+                            @WebParam("signedRequest") String signedRequest, @WebParam("userID") String userID,
+                            RequestContext rc) {
+        User user = userDao.getUserByFB(userID);
+        if (user == null) {
+            user = userDao.getUser(userID);
+            if (user ==null) {
+                user = new User();
+                user.setUsername(userID);
+                user.setPassword("heartsnow");
+                user = userDao.save(user);
+            }
+            //
+            Socialdentity s = new Socialdentity();
+            s.setUser_id(user.getId());
+            s.setFbid(userID);
+            s.setFbToken(accessToken);
+           // s.setFbSignedRequest(signedRequest);
+            socialdentityDao.save(s);
+            System.out.println(s.getFbid());
+            //System.out.println(s.getFbSignedRequest());
+            System.out.println(s.getFbToken());
+            //
+            rc.setAttribute("fbid", s.getFbid());
+            rc.setAttribute("fbtoken", s.getFbToken());
+            setUserToSession(rc, user);
+            return user;
+        } else {
+            //
+            Socialdentity s = new Socialdentity();
+            s.setUser_id(user.getId());
+            s.setFbid(userID);
+            s.setFbToken(accessToken);
+            //s.setFbSignedRequest(signedRequest);
+            socialdentityDao.save(s);
+            System.out.println(s.getFbid());
+            //System.out.println(s.getFbSignedRequest());
+            System.out.println(s.getFbToken());
+            //
+            rc.setAttribute("fbid", s.getFbid());
+            rc.setAttribute("fbtoken", s.getFbToken());
+            setUserToSession(rc, user);
+            setUserToSession(rc, user);
+            return user;
+        }
+    }
+    
+    
     // --------- Private Helpers --------- //
     // store the user in the session. If user == null, then, remove it.
     private void setUserToSession(RequestContext rc, User user) {

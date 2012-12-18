@@ -200,8 +200,9 @@ public class TestFB {
 
         Connection<Post> publicSearch = facebookClient.fetchConnection("search", Post.class, Parameter.with("q", "watermelon"), Parameter.with("type", "post"));
 
-        Connection<User> targetedSearch = facebookClient.fetchConnection("me/home", User.class, Parameter.with("q", "Mark"), Parameter.with("type", "user"));
-
+        // Connection<User> targetedSearch = facebookClient.fetchConnection("me/home", User.class, Parameter.with("q",
+        // "Mark"), Parameter.with("type", "user"));
+        Connection<User> targetedSearch = facebookClient.fetchConnection("me/home", User.class, Parameter.with("type", "user"));
         System.out.println("Public search: " + publicSearch.getData().get(0).getMessage());
         System.out.println("Posts on my wall by friends named Mark: " + targetedSearch.getData().size());
     }

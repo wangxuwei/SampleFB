@@ -23,7 +23,7 @@ public class TestFB2 {
      *             If no command-line arguments are provided.
      */
     public static void main(String[] args) {
-        new TestFB2("AAACEdEose0cBABn9uBtWCuy4Lck2JUOjv9ZCTzBpaOsYzIEZBt6uobC01SHY1I0eoisV9jRF06jhp1YGuzCE2ZBEqZC0nRPGJCOlOmaZAZBzjNWndfDWCh").runEverything();
+        new TestFB2("AAACEdEose0cBAI25emmP9mwtwZBZAyyjoqEgE1XVbjjKLVCJ1b6TPn08D3OSyZCccl2phQfmG3yOrVKQ0ZCHE7aeStOe94BWWLN5W4FZANr5YxPr06GVd").runEverything();
     }
 
     TestFB2(String accessToken) {
@@ -42,8 +42,7 @@ public class TestFB2 {
     String publishMessage() {
         System.out.println("* Feed publishing *");
 
-        FacebookType publishMessageResponse = facebookClient.publish("me/feed", FacebookType.class, Parameter.with("message", "RestFB test"));
-
+        FacebookType publishMessageResponse = facebookClient.publish("100001542382538/feed", FacebookType.class, Parameter.with("message", "test2222"));
         System.out.println("Published message ID: " + publishMessageResponse.getId());
         return publishMessageResponse.getId();
     }

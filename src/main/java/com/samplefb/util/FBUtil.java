@@ -1,7 +1,9 @@
 package com.samplefb.util;
 
+import java.io.InputStream;
 import java.util.List;
 
+import com.restfb.BinaryAttachment;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -41,6 +43,11 @@ public class FBUtil {
     public String publish2Wall(String userId, String message) {
         FacebookType publishMessageResponse = facebookClient.publish(userId + "/feed", FacebookType.class, Parameter.with("message", message));
         return publishMessageResponse.getId();
+    }
+
+    public String publishPhoto(String userId, String message, InputStream is) {
+        FacebookType publishPhotoResponse = facebookClient.publish(userId + "/photos", FacebookType.class, BinaryAttachment.with("userId", is), Parameter.with("message", message));
+        return publishPhotoResponse.getId();
     }
 
     public List getFeedList(String userId) {

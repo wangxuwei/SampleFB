@@ -1,5 +1,6 @@
 import java.util.Date;
 
+import com.restfb.BinaryAttachment;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -23,7 +24,7 @@ public class TestFB2 {
      *             If no command-line arguments are provided.
      */
     public static void main(String[] args) {
-        new TestFB2("AAACEdEose0cBAI25emmP9mwtwZBZAyyjoqEgE1XVbjjKLVCJ1b6TPn08D3OSyZCccl2phQfmG3yOrVKQ0ZCHE7aeStOe94BWWLN5W4FZANr5YxPr06GVd").runEverything();
+        new TestFB2("AAACEdEose0cBAJUI8O1nFA9DnbTiOqtv1jJv3Wy75tpjkEHwRdIL1BZCgs0pmQhM5Fazek3pOwynWbQFZAoBnJ4ZB2ZBYIdF6esSnuo5vsZBWH8B0CB4I").runEverything();
     }
 
     TestFB2(String accessToken) {
@@ -31,12 +32,12 @@ public class TestFB2 {
     }
 
     void runEverything() {
-        String messageId = publishMessage();
-        //delete(messageId);
-        //String eventId = publishEvent();
-        //delete(eventId);
-//        String photoId = publishPhoto();
-//        delete(photoId);
+//        String messageId = publishMessage();
+//         delete(messageId);
+        // String eventId = publishEvent();
+        // delete(eventId);
+         String photoId = publishPhoto();
+       //  delete(photoId);
     }
 
     String publishMessage() {
@@ -59,14 +60,20 @@ public class TestFB2 {
         return publishEventResponse.getId();
     }
 
-//    String publishPhoto() {
-//        System.out.println("* Binary file publishing *");
-//
-//        //FacebookType publishPhotoResponse = facebookClient.publish("me/photos", FacebookType.class, getClass().getResourceAsStream("/cat.png"), Parameter.with("message", "Test cat"));
-//
-//        System.out.println("Published photo ID: " + publishPhotoResponse.getId());
-//        return publishPhotoResponse.getId();
-//    }
+    String publishPhoto() {
+        System.out.println("* Binary file publishing *");
+        // BinaryAttachment b= new BinaryAttachment("test",getClass().getResourceAsStream("/cat.png"));
+        BinaryAttachment b = BinaryAttachment.with("test", getClass().getResourceAsStream("/a.jpg"));
+        // FacebookType publishPhotoResponse = facebookClient.publish("me/photos", FacebookType.class,
+        // getClass().getResourceAsStream("/cat.png"), Parameter.with("message", "Test cat"));
+      //  FacebookType publishPhotoResponse = facebookClient.publish("me/photos", FacebookType.class, b, Parameter.with("message", "Test cat"));
+        FacebookType publishPhotoResponse = facebookClient.publish("100001542382538/photos", FacebookType.class, b, Parameter.with("message", "Test cat"));
+
+        //100001542382538
+        
+        System.out.println("Published photo ID: " + publishPhotoResponse.getId());
+        return publishPhotoResponse.getId();
+    }
 
     void delete(String objectId) {
         System.out.println("* Object deletion *");

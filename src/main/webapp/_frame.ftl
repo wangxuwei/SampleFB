@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="${_r.contextPath}/css/imports-all.less.css">
     
     [@webBundle path="/js/" type="js" /]
-    
+    <script type="text/javascript" src="${_r.contextPath}/bootstrap/js/bootstrap.js"></script>
     [#-- Global Initialization --] 
     <script type="text/javascript">
       // set the contextPath as a javascript global variable

@@ -12,7 +12,7 @@ import com.samplefb.dao.ContactDao;
 import com.samplefb.dao.GroupDao;
 import com.samplefb.entity.Contact;
 import com.samplefb.entity.Group;
-import com.samplefb.util.FBUtil;
+import com.samplefb.service.FacebookService;
 
 //[User[about=null bio=null birthday=null birthdayAsDate=null education=[] email=null favoriteAthletes=[]
 //favoriteTeams=[] firstName=null gender=null hometown=null hometownName=null id=100001542382538
@@ -21,15 +21,18 @@ import com.samplefb.util.FBUtil;
 //sports=[] thirdPartyId=null timezone=null type=null updatedTime=null username=null verified=null website=null work=[]], ]
 public class ContactWebHandler {
     @Inject
-    private ContactDao contactDao;
+    private ContactDao      contactDao;
 
     @Inject
-    private GroupDao   groupDao;
+    private GroupDao        groupDao;
+
+    @Inject
+    private FacebookService facebookService;
 
     @WebModelHandler(startsWith = "/friends")
     public void getFriends(@WebParam("token") String token, @WebParam("limit") Integer limit,
                             @WebParam("offset") Integer offset, RequestContext rc) {
-        List ls = new FBUtil(token).getFriendsByPage(limit, offset);
+        List ls = facebookService.getFriendsByPage(limit, offset);
         rc.getWebModel().put("_jsonData", ls);
     }
 

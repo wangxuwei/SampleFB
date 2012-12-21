@@ -109,26 +109,153 @@
 				},
 				dataType : "json"
 			}).done(function(data) {
+				data = [{
+					"about" : "",
+					"bio" : "",
+					"birthday" : "",
+					"birthdayAsDate" : null,
+					"education" : [],
+					"email" : "",
+					"favoriteAthletes" : [],
+					"favoriteTeams" : [],
+					"firstName" : "",
+					"gender" : "",
+					"hometown" : null,
+					"hometownName" : "",
+					"id" : "100001542382538",
+					"interestedIn" : [],
+					"languages" : [],
+					"lastName" : "",
+					"link" : "",
+					"locale" : "",
+					"location" : null,
+					"meetingFor" : [],
+					"metadata" : null,
+					"middleName" : "",
+					"name" : "Woofgl Liang",
+					"political" : "",
+					"quotes" : "",
+					"relationshipStatus" : "",
+					"religion" : "",
+					"significantOther" : null,
+					"sports" : [],
+					"thirdPartyId" : "",
+					"timezone" : 0,
+					"type" : "",
+					"updatedTime" : null,
+					"username" : "",
+					"verified" : false,
+					"website" : "",
+					"work" : []
+				}, {
+					"about" : "",
+					"bio" : "",
+					"birthday" : "",
+					"birthdayAsDate" : null,
+					"education" : [],
+					"email" : "",
+					"favoriteAthletes" : [],
+					"favoriteTeams" : [],
+					"firstName" : "",
+					"gender" : "",
+					"hometown" : null,
+					"hometownName" : "",
+					"id" : "100002348599426",
+					"interestedIn" : [],
+					"languages" : [],
+					"lastName" : "",
+					"link" : "",
+					"locale" : "",
+					"location" : null,
+					"meetingFor" : [],
+					"metadata" : null,
+					"middleName" : "",
+					"name" : "宋宇光222",
+					"political" : "",
+					"quotes" : "",
+					"relationshipStatus" : "",
+					"religion" : "",
+					"significantOther" : null,
+					"sports" : [],
+					"thirdPartyId" : "",
+					"timezone" : 0,
+					"type" : "",
+					"updatedTime" : null,
+					"username" : "",
+					"verified" : false,
+					"website" : "",
+					"work" : []
+				}, {
+					"about" : "",
+					"bio" : "",
+					"birthday" : "",
+					"birthdayAsDate" : null,
+					"education" : [],
+					"email" : "",
+					"favoriteAthletes" : [],
+					"favoriteTeams" : [],
+					"firstName" : "",
+					"gender" : "",
+					"hometown" : null,
+					"hometownName" : "",
+					"id" : "100003944136001",
+					"interestedIn" : [],
+					"languages" : [],
+					"lastName" : "",
+					"link" : "",
+					"locale" : "",
+					"location" : null,
+					"meetingFor" : [],
+					"metadata" : null,
+					"middleName" : "",
+					"name" : "Xuwei  Wang",
+					"political" : "",
+					"quotes" : "",
+					"relationshipStatus" : "",
+					"religion" : "",
+					"significantOther" : null,
+					"sports" : [],
+					"thirdPartyId" : "",
+					"timezone" : 0,
+					"type" : "",
+					"updatedTime" : null,
+					"username" : "",
+					"verified" : false,
+					"website" : "",
+					"work" : []
+				}]
 				var html = $("#tmpl-Friends-list-rowItem").render(data);
 				$items.html(html);
-				$items.find(".addContactBtn").click(function(){
+
+				$items.find(".addContactBtn").click(function() {
 					var $td = $(this).closest("td");
 					var $inputs = $($td).find("input");
 					var d = {};
-					$inputs.each(function(){
+					$inputs.each(function() {
 						var $inp = $(this);
-						d[$inp.attr("name")] = $inp.val(); 
+						d[$inp.attr("name")] = $inp.val();
 					})
-					d.groupId =view.groupId; 
+
+
+					d.groupId = view.groupId;
 					brite.dao("Contact").addContact(d).done(function(po) {
 						refresh.call(view);
 						$('#myModal').hide();
 					})
+
+				})
+
+			$items.find(".contact-name").popover({
+					html : true,
+					title :'ddd',
+					trigger :'click',
+					content : '123'
 				})
 				dfd.resolve();
 			});
 			return dfd.promise();
 		}
+
 	});
 	// --------- View Private Methods --------- //
 	function refresh() {
@@ -136,8 +263,8 @@
 		var $e = view.$el;
 		setTimeout(function() {
 			brite.display("MainContent", null, {
-					id : view.groupId
-				});
+				id : view.groupId
+			});
 		}, 100)
 	}
 

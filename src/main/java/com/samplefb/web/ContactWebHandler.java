@@ -8,9 +8,12 @@ import com.britesnow.snow.web.handler.annotation.WebActionHandler;
 import com.britesnow.snow.web.handler.annotation.WebModelHandler;
 import com.britesnow.snow.web.param.annotation.WebParam;
 import com.google.inject.Inject;
+import com.restfb.types.User;
 import com.samplefb.dao.ContactDao;
+import com.samplefb.dao.ContactInfoDao;
 import com.samplefb.dao.GroupDao;
 import com.samplefb.entity.Contact;
+import com.samplefb.entity.ContactInfo;
 import com.samplefb.entity.Group;
 import com.samplefb.service.FacebookService;
 
@@ -22,7 +25,8 @@ import com.samplefb.service.FacebookService;
 public class ContactWebHandler {
     @Inject
     private ContactDao      contactDao;
-
+    @Inject
+    private ContactInfoDao  contactInfoDao;
     @Inject
     private GroupDao        groupDao;
 
@@ -32,27 +36,67 @@ public class ContactWebHandler {
     @WebModelHandler(startsWith = "/friends")
     public void getFriends(@WebParam("token") String token, @WebParam("limit") Integer limit,
                             @WebParam("offset") Integer offset, RequestContext rc) {
-        List ls = facebookService.getFriendsByPage(limit, offset);
+        List ls = facebookService.getFriendsByPage(token, limit, offset);
         rc.getWebModel().put("_jsonData", ls);
     }
 
     @WebActionHandler
-    public Object addContact(@WebParam("groupId") Long groupId, @WebParam("fbid") String fbid,
-                            @WebParam("name") String name, @WebParam("email") String email,
-                            @WebParam("hometownName") String hometownName) {
+    public Object addContact(@WebParam("token") String token, @WebParam("groupId") Long groupId,
+                            @WebParam("fbid") String fbid, @WebParam("name") String name,
+                            @WebParam("email") String email, @WebParam("hometownName") String hometownName) {
         Contact c = contactDao.getContactByFbid(fbid);
+        ContactInfo info = null;
         if (c == null) {
             c = new Contact();
+        } else {
+            info = contactDao.getContactInfo(c.getId());
+        }
+        if (info == null) {
+            info = new ContactInfo();
         }
         c.setFbid(fbid);
-        c.setName(name);
-        c.setEmail(email);
-        c.setHometownName(hometownName);
+        User user = facebookService.getFriendInformation(token, fbid);
+        c.setName(user.getName());
+        c.setEmail(user.getEmail());
+        c.setHometownName(user.getHometownName());
         if (c.getId() == null) {
             contactDao.save(c);
         } else {
             contactDao.update(c);
         }
+        //
+        info.setContactId(c.getId());
+        info.setBirthday(user.getBirthday());
+        info.setEducation(user.getEducation().toString());
+        info.setFavoriteAthletes(user.getFavoriteAthletes().toString());
+        info.setFirstName(user.getFirstName());
+        info.setGender(user.getGender());
+        info.setInterestedIn(user.getInterestedIn().toString());
+        info.setLanguages(user.getLanguages().toString());
+        info.setLastName(user.getLastName());
+        info.setLink(user.getLink());
+        info.setLocale(user.getLocale());
+        info.setLocation(user.getLocation().getName());
+        info.setMeetingFor(user.getMeetingFor().toString());
+        info.setMiddleName(user.getMiddleName());
+        info.setQuotes(user.getQuotes());
+        info.setRelationshipStatus(user.getRelationshipStatus());
+        info.setReligion(user.getReligion());
+        info.setSignificantOther(user.getSignificantOther().toString());
+        info.setSports(user.getSports().toString());
+        info.setThirdPartyId(user.getThirdPartyId());
+        info.setTimezone(user.getTimezone().toString());
+        info.setType(user.getType());
+        info.setUpdatedTime(user.getUpdatedTime().toString());
+        info.setUsername(user.getUsername());
+        info.setVerified(user.getVerified().toString());
+        info.setWebsite(user.getWebsite());
+        if (c.getId() == null) {
+            contactInfoDao.save(info);
+        } else {
+            contactInfoDao.update(info);
+        }
+        //
         Group group = groupDao.get(groupId);
         Set contacts = group.getContactList();
         contacts.add(c);

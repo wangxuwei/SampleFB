@@ -87,7 +87,7 @@
 <script id="tmpl-Friends-list-rowItem" type="text/html">
 		 	<tr>
 		 		<td><img src="http://graph.facebook.com/{{:id}}/picture"/></td>
-	            <td style="width:25%"><span class="contact-name">{{:name}}</span></td>
+	            <td style="width:25%"><span class="contact-name" fbid="{{:id}}">{{:name}}</span></td>
 	            <td style="width:25%">{{:hometownName}}</td>
 	            <td style="width:25%">{{:email}}</td>
 	            <td style="width:10%">
@@ -100,6 +100,19 @@
 	          </tr>
 </script>
 
+
+<script id="tmpl-MainContent-ContactDetail" type="text/html">
+	<table class="table">
+		<tr>
+			<td>FirstName</td>
+			<td>{{:firstName}}</td>
+		</tr>
+		<tr>
+			<td>Link</td>
+			<td>{{:link}}</td>
+		</tr>
+	</table>
+</script>
 
 
 

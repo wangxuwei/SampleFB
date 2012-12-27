@@ -42,9 +42,9 @@
 
 		docEvents : {
 			"DO_SELECT_GROUP" : function(event, extra) {
-				
+
 				var view = this;
-				var id = extra.id; 
+				var id = extra.id;
 				view.$el.find("li.sel").removeClass("sel");
 				view.$el.find("i.icon-folder-open").removeClass("icon-folder-open").addClass("icon-folder-close");
 
@@ -55,9 +55,9 @@
 
 				// keep that for dataChangeEvent (to keep the item selected)
 				view.selectedFolderId = id;
-				
+
 				brite.display("MainContent", null, {
-							id : id
+					id : id
 				});
 			}
 
@@ -70,26 +70,27 @@
 		postDisplay : function(data, config) {
 			var view = this;
 			var $e = view.$el;
-		
+
 			view.refresh.call(view);
 		},
 		refresh : function(id) {
 			var view = this;
 			var $e = view.$el;
-			brite.dao("Group").list().done(function(list) {
+			brite.dao("Group").getGroupList().done(function(list) {
 				if (list) {
 					var html = $("#tmpl-GroupList-item").render(list);
-					$e.find(".groupListContain").html(html);	
+					$e.find(".groupListContain").html(html);
 					if (!id) {
-						 var a = $e.find(".groupListContain a");
-						 if (a.length > 0) {
-							 a = $(a.get(0));
-							 a.trigger("btap");
-						 };
-					 };
+						var a = $e.find(".groupListContain a");
+						if (a.length > 0) {
+							a = $(a.get(0));
+							a.trigger("btap");
+						};
+					};
 				};
 			});
 		}
+
 	});
 	// --------- View Private Methods --------- //
 
@@ -116,8 +117,7 @@
 						name : $(this).val(),
 						id : po.id
 					};
-
-					brite.dao("Group").update(data).done(function(po) {
+					brite.dao("Group").updateGroup(data).done(function(po) {
 						$e.find(".addItem").remove();
 						brite.display("MainContent", null, {
 							id : po.id
@@ -125,7 +125,7 @@
 						view.refresh.call(view);
 					});
 				} else {
-					brite.dao("Group").create(data).done(function(po) {
+					brite.dao("Group").updateGroup(data).done(function(po) {
 						$e.find(".addItem").remove();
 						brite.display("MainContent", null, {
 							id : po.id

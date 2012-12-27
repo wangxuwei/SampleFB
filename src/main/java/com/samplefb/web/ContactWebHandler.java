@@ -42,66 +42,69 @@ public class ContactWebHandler {
 
     @WebActionHandler
     public Object addContact(@WebParam("token") String token, @WebParam("groupId") Long groupId,
-                            @WebParam("fbid") String fbid, @WebParam("name") String name,
-                            @WebParam("email") String email, @WebParam("hometownName") String hometownName) {
-        Contact c = contactDao.getContactByFbid(fbid);
-        ContactInfo info = null;
-        if (c == null) {
-            c = new Contact();
-        } else {
-            info = contactDao.getContactInfo(c.getId());
+                            @WebParam("fbid") String fbid) {
+        try {
+
+            Contact c = contactDao.getContactByFbid(fbid);
+            if (c == null) {
+                c = new Contact();
+            }
+            c.setFbid(fbid);
+            User user = facebookService.getFriendInformation(token, fbid);
+            c.setName(user.getName());
+            c.setEmail(user.getEmail());
+            c.setHometownName(user.getHometownName());
+            if (c.getId() == null) {
+                contactDao.save(c);
+            } else {
+                contactDao.update(c);
+            }
+            ContactInfo info = contactDao.getContactInfo(c.getId());
+            if (info == null) {
+                info = new ContactInfo();
+            }
+            //
+            info.setContactId(c.getId());
+            info.setBirthday(user.getBirthday());
+            info.setEducation(user.getEducation().toString());
+            info.setFavoriteAthletes(user.getFavoriteAthletes().toString());
+            info.setFirstName(user.getFirstName());
+            info.setGender(user.getGender());
+            info.setInterestedIn(user.getInterestedIn().toString());
+            info.setLanguages(user.getLanguages().toString());
+            info.setLastName(user.getLastName());
+            info.setLink(user.getLink());
+            info.setLocale(user.getLocale());
+            info.setLocation(user.getLocation() == null ? "" : user.getLocation().getName());
+            info.setMeetingFor(user.getMeetingFor().toString());
+            info.setMiddleName(user.getMiddleName());
+            info.setQuotes(user.getQuotes());
+            info.setRelationshipStatus(user.getRelationshipStatus());
+            info.setReligion(user.getReligion());
+            info.setSignificantOther(user.getSignificantOther() == null ? "" : user.getSignificantOther().toString());
+            info.setSports(user.getSports().toString());
+            info.setThirdPartyId(user.getThirdPartyId());
+            info.setTimezone(user.getTimezone() == null ? "" : user.getTimezone().toString());
+            info.setType(user.getType());
+            info.setUpdatedTime(user.getUpdatedTime() == null ? "" : user.getUpdatedTime().toString());
+            info.setUsername(user.getUsername());
+            info.setVerified(user.getVerified() == null ? "" : user.getVerified().toString());
+            info.setWebsite(user.getWebsite());
+            if (info.getId() == null) {
+                contactInfoDao.save(info);
+            } else {
+                contactInfoDao.update(info);
+            }
+            //
+            Group group = groupDao.get(groupId);
+            Set contacts = group.getContactList();
+            contacts.add(c);
+            group.setContactList(contacts);
+            groupDao.update(group);
+            return group;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (info == null) {
-            info = new ContactInfo();
-        }
-        c.setFbid(fbid);
-        User user = facebookService.getFriendInformation(token, fbid);
-        c.setName(user.getName());
-        c.setEmail(user.getEmail());
-        c.setHometownName(user.getHometownName());
-        if (c.getId() == null) {
-            contactDao.save(c);
-        } else {
-            contactDao.update(c);
-        }
-        //
-        info.setContactId(c.getId());
-        info.setBirthday(user.getBirthday());
-        info.setEducation(user.getEducation().toString());
-        info.setFavoriteAthletes(user.getFavoriteAthletes().toString());
-        info.setFirstName(user.getFirstName());
-        info.setGender(user.getGender());
-        info.setInterestedIn(user.getInterestedIn().toString());
-        info.setLanguages(user.getLanguages().toString());
-        info.setLastName(user.getLastName());
-        info.setLink(user.getLink());
-        info.setLocale(user.getLocale());
-        info.setLocation(user.getLocation().getName());
-        info.setMeetingFor(user.getMeetingFor().toString());
-        info.setMiddleName(user.getMiddleName());
-        info.setQuotes(user.getQuotes());
-        info.setRelationshipStatus(user.getRelationshipStatus());
-        info.setReligion(user.getReligion());
-        info.setSignificantOther(user.getSignificantOther().toString());
-        info.setSports(user.getSports().toString());
-        info.setThirdPartyId(user.getThirdPartyId());
-        info.setTimezone(user.getTimezone().toString());
-        info.setType(user.getType());
-        info.setUpdatedTime(user.getUpdatedTime().toString());
-        info.setUsername(user.getUsername());
-        info.setVerified(user.getVerified().toString());
-        info.setWebsite(user.getWebsite());
-        if (c.getId() == null) {
-            contactInfoDao.save(info);
-        } else {
-            contactInfoDao.update(info);
-        }
-        //
-        Group group = groupDao.get(groupId);
-        Set contacts = group.getContactList();
-        contacts.add(c);
-        group.setContactList(contacts);
-        groupDao.update(group);
-        return group;
+        return null;
     }
 }

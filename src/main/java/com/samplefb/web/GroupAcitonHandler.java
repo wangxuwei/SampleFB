@@ -12,6 +12,7 @@ import com.britesnow.snow.web.param.annotation.WebParam;
 import com.google.inject.Inject;
 import com.samplefb.dao.GroupDao;
 import com.samplefb.entity.Group;
+import com.samplefb.entity.User;
 
 /**
  * 
@@ -20,12 +21,15 @@ import com.samplefb.entity.Group;
 public class GroupAcitonHandler {
     @Inject
     private GroupDao groupDao;
+    @Inject
+    private WebUtil  webUtil;
 
     @WebModelHandler(startsWith = "/getGroupList")
-    public void getGroupList(@WebModel Map m) {
-        String hql = "from Group";
-        List reList = groupDao.search(hql);
-        m.put("groupList", reList);
+    public void getGroupList(@WebModel Map m, RequestContext rc) {
+        String hql = "from Group where user_id=? order by name ";
+        User currentUser = webUtil.getUser(rc);
+        List reList = groupDao.search(hql, currentUser.getId());
+        m.put("result", reList);
     }
 
     @WebModelHandler(startsWith = "/getGroupById")
@@ -38,11 +42,13 @@ public class GroupAcitonHandler {
     public Map createGroup(@WebParam("id") Long id, @WebParam("name") String name, RequestContext rc) {
         Map resultMap = new HashMap();
         try {
+            User currentUser = webUtil.getUser(rc);
             Group po = new Group();
             if (id != null) {
-                groupDao.get(id);
+                po = groupDao.get(id);
             }
             po.setName(name);
+            po.setUser_id(currentUser.getId());
             if (po.getId() != null) {
                 groupDao.update(po);
             } else {

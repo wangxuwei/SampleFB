@@ -118,7 +118,7 @@
 					"email" : "",
 					"favoriteAthletes" : [],
 					"favoriteTeams" : [],
-					"firstName" : "",
+					"firstName" : "aa",
 					"gender" : "",
 					"hometown" : null,
 					"hometownName" : "",
@@ -156,7 +156,7 @@
 					"email" : "",
 					"favoriteAthletes" : [],
 					"favoriteTeams" : [],
-					"firstName" : "",
+					"firstName" : "bb",
 					"gender" : "",
 					"hometown" : null,
 					"hometownName" : "",
@@ -194,7 +194,7 @@
 					"email" : "",
 					"favoriteAthletes" : [],
 					"favoriteTeams" : [],
-					"firstName" : "",
+					"firstName" : "cc",
 					"gender" : "",
 					"hometown" : null,
 					"hometownName" : "",
@@ -236,23 +236,31 @@
 						d[$inp.attr("name")] = $inp.val();
 					})
 
-
 					d.groupId = view.groupId;
 					brite.dao("Contact").addContact(d).done(function(po) {
 						refresh.call(view);
 						$('#myModal').hide();
 					})
-
 				})
 
-			$items.find(".contact-name").popover({
-					html : true,
-					title :'ddd',
-					trigger :'click',
-					content : '123'
-				})
-				dfd.resolve();
+				$items.find(".contact-name").each(function() {
+					var fbid = $(this).attr("fbid");
+					var po = {};
+					for (var i=0; i < data.length; i++) {
+					  if (data[i].id == fbid) {
+					  	po = data[i];
+					  };
+					};
+					var html = $("#tmpl-MainContent-ContactDetail").render(po); 
+					$(this).popover({
+						html : true,
+						title : 'Detail',
+						trigger : 'hover',
+						content : html
+					})
+				});
 			});
+			dfd.resolve();
 			return dfd.promise();
 		}
 
